@@ -157,3 +157,43 @@ export interface AuditLogItem {
   ipAddress?: string | null;
   createdAt: string | Date;
 }
+
+export interface BookItem {
+  id: string;
+  title: string;
+  author: string;
+  publisher: string;
+  category: string;
+  gradeLevel: string;
+  departmentId?: string | null;
+  department?: {
+    id: string;
+    code: string;
+    name: string;
+  } | null;
+  isbn?: string | null;
+  stock: number;
+  available: number;
+  coverUrl?: string | null;
+  fileUrl?: string | null;
+  createdAt: string | Date;
+}
+
+export interface MbgMenuItem {
+  id: string;
+  dayName: string;
+  date: string;
+  mainCourse: string;
+  sideDish: string;
+  vegetable: string;
+  fruit: string;
+  drink: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  allergens?: string | null;
+  distributionTime: string;
+  status: "SCHEDULED" | "DISTRIBUTED";
+  createdAt: string | Date;
+}

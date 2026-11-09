@@ -260,6 +260,74 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
+        {/* Layanan Terpadu Sekolah: Menu MBG & Katalog Buku Pelajaran */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Card MBG */}
+          <div className="rounded-lg border border-slate-200 bg-white p-5 flex flex-col justify-between shadow-2xs hover:border-slate-300 transition-colors">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-xs border border-emerald-200">
+                  Program Gizi Nasional
+                </span>
+                <span className="text-xs text-slate-400">11:45 - 12:30 WIB</span>
+              </div>
+              <h3 className="text-sm font-bold text-slate-900 mt-1">
+                🍱 Makan Bergizi Gratis (MBG) Hari Ini
+              </h3>
+              <p className="text-xs text-slate-600 font-semibold mt-1.5">
+                Nasi Putih Pulen + Ayam Panggang Madu
+              </p>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                Lengkap dengan Tahu Tempe Bacem, Sayur Sup Brokoli, Pisang Cavendish, & Susu UHT (650 kkal).
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <span className="text-[11px] font-semibold text-emerald-600">
+                ✓ Telah Selesai Dibagikan
+              </span>
+              <Link
+                href="/mbg"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+              >
+                <span>Lihat Menu 1 Minggu</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Card Buku Pelajaran */}
+          <div className="rounded-lg border border-slate-200 bg-white p-5 flex flex-col justify-between shadow-2xs hover:border-slate-300 transition-colors">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-xs border border-indigo-200">
+                  Perpustakaan & Modul
+                </span>
+                <span className="text-xs text-slate-400">Kurikulum Merdeka</span>
+              </div>
+              <h3 className="text-sm font-bold text-slate-900 mt-1">
+                📚 Buku Pelajaran & Modul Kejuruan
+              </h3>
+              <p className="text-xs text-slate-600 font-semibold mt-1.5">
+                Koleksi Buku Paket Kelas 10, 11, & 12
+              </p>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                Tersedia buku pegangan siswa untuk konsentrasi RPL, TKJ, DKV, MIPA, dan Umum.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <span className="text-[11px] font-semibold text-slate-500">
+                6 Buku Tersedia
+              </span>
+              <Link
+                href="/buku"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+              >
+                <span>Buka Katalog Buku</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </DashboardShell>
   );

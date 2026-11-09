@@ -143,6 +143,9 @@ export default function PresensiPage() {
 
         {/* Table */}
         <div className="rounded-lg border border-slate-200 bg-white overflow-hidden shadow-2xs">
+          <div className="sm:hidden px-3.5 py-2 bg-slate-50 border-b border-slate-200 text-[11px] text-slate-500 flex items-center justify-between">
+            <span>👉 Geser tabel ke samping untuk melihat kolom lengkap</span>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">

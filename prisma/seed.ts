@@ -7,6 +7,8 @@ async function main() {
   console.log("🌱 Memulai seeding database SIMAS...");
 
   // Bersihkan data lama
+  await prisma.mbgMenu.deleteMany();
+  await prisma.book.deleteMany();
   await prisma.auditLog.deleteMany();
   await prisma.announcement.deleteMany();
   await prisma.disciplineRecord.deleteMany();
@@ -492,7 +494,178 @@ async function main() {
     },
   });
 
-  // 10. Seed Audit Logs
+  // 10. Seed Buku Pelajaran & E-Library
+  const booksData = [
+    {
+      title: "Pemrograman Web & Perangkat Bergerak (Kurikulum Merdeka)",
+      author: "Budi Raharjo & Tim Pengembang",
+      publisher: "Pusat Kurikulum dan Perbukuan Kemendikbudristek",
+      category: "Kejuruan",
+      gradeLevel: "10",
+      departmentId: deptRPL.id,
+      isbn: "978-623-194-001-2",
+      stock: 40,
+      available: 36,
+      coverUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&auto=format&fit=crop&q=80",
+    },
+    {
+      title: "Administrasi Infrastruktur Jaringan & Cloud Modern",
+      author: "Iwan Sofana, S.T., M.T.",
+      publisher: "Informatika Bandung",
+      category: "Kejuruan",
+      gradeLevel: "10",
+      departmentId: deptTKJ.id,
+      isbn: "978-602-6232-15-4",
+      stock: 35,
+      available: 30,
+      coverUrl: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=300&auto=format&fit=crop&q=80",
+    },
+    {
+      title: "Desain Komunikasi Visual & Prinsip Tipografi Digital",
+      author: "Dendi Pratama, M.Sn.",
+      publisher: "Penerbit Erlangga",
+      category: "Seni",
+      gradeLevel: "10",
+      departmentId: deptDKV.id,
+      isbn: "978-602-298-887-1",
+      stock: 30,
+      available: 28,
+      coverUrl: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=300&auto=format&fit=crop&q=80",
+    },
+    {
+      title: "Matematika Tingkat Lanjut: Aljabar, Geometri & Vektor",
+      author: "Drs. Sukino & Tim Asosiasi Guru",
+      publisher: "Balai Pustaka",
+      category: "MIPA",
+      gradeLevel: "10",
+      departmentId: deptMIPA.id,
+      isbn: "978-979-018-992-0",
+      stock: 45,
+      available: 42,
+      coverUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=300&auto=format&fit=crop&q=80",
+    },
+    {
+      title: "Bahasa Indonesia untuk Komunikasi Ilmiah & Profesional",
+      author: "Prof. Dr. Dendy Sugono",
+      publisher: "Yudhistira Ghalia",
+      category: "Umum",
+      gradeLevel: "Semua",
+      isbn: "978-979-670-341-8",
+      stock: 50,
+      available: 48,
+      coverUrl: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=300&auto=format&fit=crop&q=80",
+    },
+    {
+      title: "Dasar-Dasar Rekayasa Perangkat Lunak: Algoritma & Basis Data",
+      author: "Sandhika Galih, S.Kom., M.T.",
+      publisher: "Elex Media Komputindo",
+      category: "Kejuruan",
+      gradeLevel: "11",
+      departmentId: deptRPL.id,
+      isbn: "978-623-002-120-9",
+      stock: 38,
+      available: 35,
+      coverUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=300&auto=format&fit=crop&q=80",
+    },
+  ];
+
+  for (const b of booksData) {
+    await prisma.book.create({ data: b });
+  }
+
+  console.log("✅ Books seeded");
+
+  // 11. Seed Menu MBG (Makan Bergizi Gratis)
+  const mbgMenus = [
+    {
+      dayName: "Senin",
+      date: "2026-11-09",
+      mainCourse: "Nasi Putih Pulen + Ayam Panggang Saus Kecap Madu",
+      sideDish: "Tahu Tempe Bacem Gurih",
+      vegetable: "Sayur Sup Bening Brokoli & Wortel",
+      fruit: "Pisang Cavendish Manis",
+      drink: "Susu UHT Segar 125ml",
+      calories: 650,
+      protein: 28,
+      carbs: 85,
+      fat: 14,
+      allergens: "Kedelai, Laktosa",
+      distributionTime: "11:45 - 12:30 WIB",
+      status: "DISTRIBUTED",
+    },
+    {
+      dayName: "Selasa",
+      date: "2026-11-10",
+      mainCourse: "Nasi Kuning Gurih Rempah + Semur Daging Sapi",
+      sideDish: "Perkedel Kentang Sayur",
+      vegetable: "Tumis Buncis Jagung Manis Pipil",
+      fruit: "Jeruk Manis Medan",
+      drink: "Air Mineral Higienis / Susu Kedelai",
+      calories: 680,
+      protein: 30,
+      carbs: 88,
+      fat: 16,
+      allergens: "Kedelai",
+      distributionTime: "11:45 - 12:30 WIB",
+      status: "SCHEDULED",
+    },
+    {
+      dayName: "Rabu",
+      date: "2026-11-11",
+      mainCourse: "Nasi Merah Sehat + Ikan Nila Bakar Bumbu Kuning",
+      sideDish: "Tahu Goreng Bumbu Lengkuas",
+      vegetable: "Sayur Asem Segar Khas Jakarta",
+      fruit: "Semangka Merah Tanpa Biji",
+      drink: "Susu UHT Rendah Lemak",
+      calories: 620,
+      protein: 27,
+      carbs: 80,
+      fat: 12,
+      allergens: "Ikan, Laktosa",
+      distributionTime: "11:45 - 12:30 WIB",
+      status: "SCHEDULED",
+    },
+    {
+      dayName: "Kamis",
+      date: "2026-11-12",
+      mainCourse: "Nasi Putih Hangat + Rolade Ayam Saus Asam Manis",
+      sideDish: "Kering Tempe Wijen Manis Gurih",
+      vegetable: "Sayur Capcay Bakso Sayuran Organik",
+      fruit: "Melon Madu Segar",
+      drink: "Susu Cokelat UHT 125ml",
+      calories: 660,
+      protein: 29,
+      carbs: 86,
+      fat: 15,
+      allergens: "Telur, Kedelai, Laktosa",
+      distributionTime: "11:45 - 12:30 WIB",
+      status: "SCHEDULED",
+    },
+    {
+      dayName: "Jumat",
+      date: "2026-11-13",
+      mainCourse: "Nasi Liwet Harum + Telur Balado Daun Jeruk",
+      sideDish: "Bakwan Sayur Jamur Tiram",
+      vegetable: "Sayur Lodeh Labu Siam & Jagung",
+      fruit: "Pepaya California Potong",
+      drink: "Susu Segar Pasteurisasi",
+      calories: 630,
+      protein: 25,
+      carbs: 82,
+      fat: 14,
+      allergens: "Telur, Laktosa",
+      distributionTime: "11:30 - 12:00 WIB",
+      status: "SCHEDULED",
+    },
+  ];
+
+  for (const m of mbgMenus) {
+    await prisma.mbgMenu.create({ data: m });
+  }
+
+  console.log("✅ MBG menus seeded");
+
+  // 12. Seed Audit Logs
   await prisma.auditLog.create({
     data: {
       userId: admin.id,

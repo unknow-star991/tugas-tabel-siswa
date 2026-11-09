@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "./sidebar";
 import { Topbar } from "./topbar";
+import { BottomNav } from "./bottom-nav";
 import { SessionUser } from "@/types";
 
 interface DashboardShellProps {
@@ -56,7 +57,7 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
       <div className="flex min-h-screen items-center justify-center bg-slate-50">
         <div className="flex flex-col items-center gap-3 text-slate-500">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-indigo-600" />
-          <p className="text-xs font-medium tracking-wide">Memuat Sistem SIMAS...</p>
+          <p className="text-xs font-semibold tracking-wide">Memuat SIMAS ACADEMIA...</p>
         </div>
       </div>
     );
@@ -64,6 +65,7 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
 
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-900">
+      {/* Desktop Sidebar & Mobile Off-canvas Drawer */}
       <Sidebar
         user={user}
         isOpen={sidebarOpen}
@@ -79,9 +81,13 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
           title={title}
         />
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        {/* Responsive Content Area with mobile bottom padding */}
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 pb-24 sm:pb-8 max-w-7xl w-full mx-auto">
           {children}
         </main>
+
+        {/* Mobile Quick Bottom Navigation Bar */}
+        <BottomNav />
       </div>
     </div>
   );

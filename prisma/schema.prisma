@@ -28,6 +28,7 @@ model Department {
   description String?
   classes     ClassRoom[]
   students    Student[]
+  books       Book[]
 }
 
 model ClassRoom {
@@ -126,4 +127,40 @@ model AuditLog {
   details   String
   ipAddress String?
   createdAt DateTime @default(now())
+}
+
+model Book {
+  id           String      @id @default(uuid())
+  title        String
+  author       String
+  publisher    String
+  category     String      // "Kejuruan" | "MIPA" | "Umum" | "Seni"
+  gradeLevel   String      // "10" | "11" | "12" | "Semua"
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  isbn         String?
+  stock        Int         @default(35)
+  available    Int         @default(30)
+  coverUrl     String?
+  fileUrl      String?
+  createdAt    DateTime    @default(now())
+}
+
+model MbgMenu {
+  id               String   @id @default(uuid())
+  dayName          String   // "Senin", "Selasa", dll
+  date             String   // "YYYY-MM-DD"
+  mainCourse       String   // "Nasi Putih + Ayam Panggang Madu"
+  sideDish         String   // "Tempe Bacem & Tahu Isi"
+  vegetable        String   // "Sup Brokoli Wortel"
+  fruit            String   // "Pisang Cavendish"
+  drink            String   // "Susu UHT Segar 125ml"
+  calories         Int      // 650
+  protein          Int      // 28
+  carbs            Int      @default(85)
+  fat              Int      @default(14)
+  allergens        String?  // "Kedelai, Laktosa"
+  distributionTime String   @default("11:45 - 12:30 WIB")
+  status           String   @default("SCHEDULED") // "SCHEDULED" | "DISTRIBUTED"
+  createdAt        DateTime @default(now())
 }
