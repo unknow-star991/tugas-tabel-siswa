@@ -54,9 +54,9 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50">
-        <div className="flex flex-col items-center gap-3 text-slate-500">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-indigo-600" />
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors">
+        <div className="flex flex-col items-center gap-3 text-slate-500 dark:text-slate-400">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 dark:border-slate-700 border-t-indigo-600 dark:border-t-indigo-500" />
           <p className="text-xs font-semibold tracking-wide">Memuat SIMAS ACADEMIA...</p>
         </div>
       </div>
@@ -64,7 +64,7 @@ export function DashboardShell({ children, title }: DashboardShellProps) {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       {/* Desktop Sidebar & Mobile Off-canvas Drawer */}
       <Sidebar
         user={user}

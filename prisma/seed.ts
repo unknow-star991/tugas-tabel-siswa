@@ -7,6 +7,7 @@ async function main() {
   console.log("🌱 Memulai seeding database SIMAS...");
 
   // Bersihkan data lama
+  await prisma.counselingRequest.deleteMany();
   await prisma.notification.deleteMany();
   await prisma.extracurricular.deleteMany();
   await prisma.schedule.deleteMany();
@@ -934,6 +935,31 @@ async function main() {
       ipAddress: "127.0.0.1",
     },
   });
+
+  // 13. Seed Counseling Requests
+  await prisma.counselingRequest.create({
+    data: {
+      studentName: "Ahmad Pratama",
+      classRoom: "12-RPL-A",
+      category: "Karir & Perguruan Tinggi",
+      notes: "Konsultasi pemilihan jurusan SNBP/SNBT 2027 antara Teknik Informatika ITB atau Ilmu Komputer UI, serta persiapan portofolio sertifikasi.",
+      status: "SCHEDULED",
+      scheduledDate: "Kamis, 12 Nov 2026 - 10:00 WIB (Ruang BK)",
+    },
+  });
+
+  await prisma.counselingRequest.create({
+    data: {
+      studentName: "Ahmad Pratama",
+      classRoom: "12-RPL-A",
+      category: "Akademik",
+      notes: "Permohonan pendampingan belajar mata pelajaran Matematika Diskrit dan Algoritma Lanjutan menjelang ujian akhir semester.",
+      status: "PENDING",
+      scheduledDate: null,
+    },
+  });
+
+  console.log("✅ Counseling requests seeded");
 
   console.log("🎉 Seeding selesai! Database siap digunakan.");
 }

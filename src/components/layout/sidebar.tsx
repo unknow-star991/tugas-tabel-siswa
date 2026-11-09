@@ -17,6 +17,8 @@ import {
   GraduationCap,
   LogOut,
   X,
+  HeartHandshake,
+  Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SessionUser } from "@/types";
@@ -54,13 +56,15 @@ export function Sidebar({ user, isOpen, onClose, onLogout }: SidebarProps) {
         { name: "Buku Pelajaran", href: "/buku", icon: BookOpen, adminOnly: false },
         { name: "Menu MBG (Makan Sehat)", href: "/mbg", icon: UtensilsCrossed, adminOnly: false, badge: "MBG" },
         { name: "Ekstrakurikuler", href: "/ekskul", icon: Sparkles, adminOnly: false },
+        { name: "Konseling & BK", href: "/konseling", icon: HeartHandshake, adminOnly: false },
         { name: "Layanan Surat Siswa", href: "/surat", icon: FileText, adminOnly: false },
         { name: "Pengumuman", href: "/pengumuman", icon: Megaphone, adminOnly: false },
       ],
     },
     {
-      title: "Keamanan Sistem",
+      title: "Pengaturan & Keamanan",
       items: [
+        { name: "Pengaturan Akun", href: "/pengaturan", icon: Settings, adminOnly: false },
         { name: "Audit Log & Forensik", href: "/audit-logs", icon: ShieldAlert, adminOnly: true },
       ],
     },

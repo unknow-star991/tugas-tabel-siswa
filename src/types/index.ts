@@ -237,3 +237,14 @@ export interface NotificationItem {
   isRead: boolean;
   createdAt: string | Date;
 }
+
+export interface CounselingItem {
+  id: string;
+  studentName: string;
+  classRoom: string;
+  category: string;
+  notes: string;
+  status: "PENDING" | "SCHEDULED" | "RESOLVED" | "CANCELLED";
+  scheduledDate?: string | null;
+  createdAt: string | Date;
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   GraduationCap,
   ShieldCheck,
@@ -10,6 +11,7 @@ import {
   ArrowRight,
   BookOpen,
   Lock,
+  ArrowLeft,
 } from "lucide-react";
 
 export default function LoginPage() {
@@ -116,6 +118,14 @@ export default function LoginPage() {
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-16 xl:px-24">
         <div className="mx-auto w-full max-w-md bg-white p-8 sm:p-10 rounded-xl border border-slate-200 shadow-xs">
           <div className="mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors mb-4"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <span>Kembali ke Beranda Sekolah</span>
+            </Link>
+
             <div className="lg:hidden flex items-center gap-2 mb-4">
               <div className="flex h-8 w-8 items-center justify-center rounded-md bg-indigo-600 text-white font-bold">
                 <GraduationCap className="h-5 w-5" />

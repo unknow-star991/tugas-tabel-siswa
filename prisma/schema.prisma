@@ -203,3 +203,14 @@ model Notification {
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model CounselingRequest {
+  id           String   @id @default(uuid())
+  studentName  String
+  classRoom    String
+  category     String   // "Akademik" | "Karir" | "Pribadi"
+  notes        String
+  status       String   @default("PENDING") // "PENDING" | "SCHEDULED" | "RESOLVED"
+  scheduledDate String?
+  createdAt    DateTime @default(now())
+}
