@@ -7,6 +7,9 @@ async function main() {
   console.log("🌱 Memulai seeding database SIMAS...");
 
   // Bersihkan data lama
+  await prisma.notification.deleteMany();
+  await prisma.extracurricular.deleteMany();
+  await prisma.schedule.deleteMany();
   await prisma.mbgMenu.deleteMany();
   await prisma.book.deleteMany();
   await prisma.auditLog.deleteMany();
@@ -664,6 +667,263 @@ async function main() {
   }
 
   console.log("✅ MBG menus seeded");
+
+  // 12. Seed Jadwal Pelajaran (Schedules)
+  const schedulesData = [
+    // SENIN
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Senin",
+      period: 1,
+      startTime: "07:15",
+      endTime: "08:45",
+      subjectName: "Upacara Bendera & Pembinaan Karakter",
+      teacherName: "Bpk. H. Suryanto, M.Pd.",
+      roomName: "Lapangan Utama",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Senin",
+      period: 2,
+      startTime: "08:45",
+      endTime: "10:15",
+      subjectName: "Pemrograman Web & Perangkat Bergerak",
+      teacherName: "Ibu Siti Rahmawati, S.Kom",
+      roomName: "Lab Komputer RPL 1",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Senin",
+      period: 3,
+      startTime: "10:30",
+      endTime: "12:00",
+      subjectName: "Basis Data Relasional & SQL",
+      teacherName: "Bpk. Ridwan Fauzi, M.T.",
+      roomName: "Lab Komputer RPL 1",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Senin",
+      period: 4,
+      startTime: "12:45",
+      endTime: "14:15",
+      subjectName: "Bahasa Inggris Komunikasi Teknis",
+      teacherName: "Ibu Sarah Johnson, M.Pd.",
+      roomName: "Ruang Teori X-RPL-1",
+    },
+
+    // SELASA
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Selasa",
+      period: 1,
+      startTime: "07:15",
+      endTime: "09:30",
+      subjectName: "Algoritma Pemrograman & Struktur Data",
+      teacherName: "Ibu Siti Rahmawati, S.Kom",
+      roomName: "Lab Komputer RPL 1",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Selasa",
+      period: 2,
+      startTime: "09:45",
+      endTime: "11:45",
+      subjectName: "Matematika Terapan & Logika Komputasi",
+      teacherName: "Drs. Hendro Wibowo",
+      roomName: "Ruang Teori X-RPL-1",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Selasa",
+      period: 3,
+      startTime: "12:30",
+      endTime: "14:30",
+      subjectName: "Pendidikan Jasmani, Olahraga & Kesehatan",
+      teacherName: "Bpk. Coach Danu",
+      roomName: "Gelanggang Olahraga",
+    },
+
+    // RABU
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Rabu",
+      period: 1,
+      startTime: "07:15",
+      endTime: "09:30",
+      subjectName: "Pemodelan Perangkat Lunak (UML & Agile)",
+      teacherName: "Bpk. Ridwan Fauzi, M.T.",
+      roomName: "Lab Komputer RPL 2",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Rabu",
+      period: 2,
+      startTime: "09:45",
+      endTime: "11:45",
+      subjectName: "Bahasa Indonesia & Penulisan Ilmiah",
+      teacherName: "Ibu Dewi Lestari, M.Pd.",
+      roomName: "Ruang Teori X-RPL-1",
+    },
+
+    // KAMIS
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Kamis",
+      period: 1,
+      startTime: "07:15",
+      endTime: "09:30",
+      subjectName: "Infrastruktur Jaringan & Server Dasar",
+      teacherName: "Bpk. Iwan Sofana, S.T.",
+      roomName: "Lab Jaringan TKJ",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Kamis",
+      period: 2,
+      startTime: "09:45",
+      endTime: "11:45",
+      subjectName: "Pendidikan Pancasila & Kewarganegaraan",
+      teacherName: "Bpk. Drs. Sukarman",
+      roomName: "Ruang Teori X-RPL-1",
+    },
+
+    // JUMAT
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Jumat",
+      period: 1,
+      startTime: "07:00",
+      endTime: "08:30",
+      subjectName: "Literasi Digital & Senam Pagi Sekolah",
+      teacherName: "Tim Kesiswaan",
+      roomName: "Plaza Utama",
+    },
+    {
+      classRoomId: classXRpl1.id,
+      dayName: "Jumat",
+      period: 2,
+      startTime: "08:45",
+      endTime: "11:15",
+      subjectName: "Projek Penguatan Profil Pelajar Pancasila (P5)",
+      teacherName: "Koordinator Tim P5",
+      roomName: "Aula Graha Wiyata",
+    },
+  ];
+
+  for (const s of schedulesData) {
+    await prisma.schedule.create({ data: s });
+  }
+
+  console.log("✅ Schedules seeded");
+
+  // 13. Seed Ekstrakurikuler (Extracurriculars)
+  const ekskulData = [
+    {
+      name: "Coding & Cyber Security Club",
+      category: "Teknologi",
+      coachName: "Bpk. Ridwan Fauzi, M.T. & Alumni Industri",
+      scheduleDay: "Rabu",
+      scheduleTime: "15:30 - 17:00 WIB",
+      location: "Lab Komputer RPL 1 & Ruang Server",
+      memberCount: 38,
+      description: "Pengembangan web modern, machine learning dasar, CTF (Capture the Flag), dan persiapan Lomba LKS.",
+    },
+    {
+      name: "Robotika & Internet of Things (IoT)",
+      category: "Teknologi",
+      coachName: "Bpk. Iwan Sofana, S.T.",
+      scheduleDay: "Kamis",
+      scheduleTime: "15:30 - 17:00 WIB",
+      location: "Lab Elektronika & IoT TKJ",
+      memberCount: 26,
+      description: "Perakitan mikrokontroler Arduino/ESP32, sensor pintar, otomasi industri, dan robot line follower.",
+    },
+    {
+      name: "Pasukan Pengibar Bendera Pusaka (Paskibra)",
+      category: "Kepemimpinan",
+      coachName: "Pelatih Kodim & Tim Kesiswaan",
+      scheduleDay: "Selasa & Jumat",
+      scheduleTime: "15:30 - 17:15 WIB",
+      location: "Lapangan Upacara Utama",
+      memberCount: 42,
+      description: "Pelatihan baris-berbaris formal, pembinaan kedisiplinan, postur, serta seleksi paskibraka tingkat kota.",
+    },
+    {
+      name: "Palang Merah Remaja (PMR Wira)",
+      category: "Kemanusiaan",
+      coachName: "dr. Citra Ananda (UKS & PMI)",
+      scheduleDay: "Kamis",
+      scheduleTime: "15:30 - 17:00 WIB",
+      location: "Gedung UKS Terpadu",
+      memberCount: 32,
+      description: "Pertolongan pertama gawat darurat, simulasi bencana, donor darah, dan pola hidup sehat sekolah.",
+    },
+    {
+      name: "Futsal & Sepak Bola Prestasi",
+      category: "Olahraga",
+      coachName: "Coach Danu & Tim Pelatih Lisensi C",
+      scheduleDay: "Senin & Kamis",
+      scheduleTime: "16:00 - 18:00 WIB",
+      location: "Gelanggang Olahraga & Lapangan Futsal",
+      memberCount: 45,
+      description: "Pengasahan taktik tim, fisik atlet pelajar, dan persiapan turnamen antar-SMA/SMK tingkat provinsi.",
+    },
+    {
+      name: "Desain Grafis & Multimedia Kreatif",
+      category: "Seni",
+      coachName: "Ibu Dendi Pratama, M.Sn.",
+      scheduleDay: "Selasa",
+      scheduleTime: "15:30 - 17:00 WIB",
+      location: "Studio Multimedia DKV",
+      memberCount: 30,
+      description: "Eksplorasi ilustrasi digital, UI/UX prototyping, motion graphic, dan fotografi studio komersial.",
+    },
+  ];
+
+  for (const e of ekskulData) {
+    await prisma.extracurricular.create({ data: e });
+  }
+
+  console.log("✅ Extracurriculars seeded");
+
+  // 14. Seed Notifikasi Pengguna (Notifications)
+  const notificationsData = [
+    {
+      userId: siswaUser.id,
+      title: "🍱 Menu MBG Hari Ini Siap Dibagikan",
+      message: "Menu Ayam Panggang Madu + Susu UHT (650 kkal) siap diambil di kantin sehat pukul 11:45 WIB.",
+      category: "MBG",
+      isRead: false,
+    },
+    {
+      userId: siswaUser.id,
+      title: "📚 Batas Pinjam Buku Perpustakaan",
+      message: "Buku 'Pemrograman Web & Perangkat Bergerak' dipinjam sejak 5 Nov, batas pengembalian tanggal 12 Nov.",
+      category: "LIBRARY",
+      isRead: false,
+    },
+    {
+      userId: siswaUser.id,
+      title: "🗓️ Perubahan Ruang Kuliah/Praktek",
+      message: "Mata pelajaran Basis Data hari ini dipindahkan ke Lab Komputer RPL 1 lantai 2.",
+      category: "ACADEMIC",
+      isRead: true,
+    },
+    {
+      userId: admin.id,
+      title: "🛡️ Audit: Sinkronisasi Master Siswa",
+      message: "Data 12 siswa dan rekap presensi harian telah diperbarui oleh sistem.",
+      category: "GENERAL",
+      isRead: false,
+    },
+  ];
+
+  for (const n of notificationsData) {
+    await prisma.notification.create({ data: n });
+  }
+
+  console.log("✅ Notifications seeded");
 
   // 12. Seed Audit Logs
   await prisma.auditLog.create({

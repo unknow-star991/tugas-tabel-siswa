@@ -197,3 +197,43 @@ export interface MbgMenuItem {
   status: "SCHEDULED" | "DISTRIBUTED";
   createdAt: string | Date;
 }
+
+export interface ScheduleItem {
+  id: string;
+  classRoomId: string;
+  classRoom?: {
+    id: string;
+    name: string;
+    gradeLevel: string;
+  };
+  dayName: string;
+  period: number;
+  startTime: string;
+  endTime: string;
+  subjectName: string;
+  teacherName: string;
+  roomName: string;
+}
+
+export interface ExtracurricularItem {
+  id: string;
+  name: string;
+  category: string;
+  coachName: string;
+  scheduleDay: string;
+  scheduleTime: string;
+  location: string;
+  memberCount: number;
+  description: string;
+  createdAt: string | Date;
+}
+
+export interface NotificationItem {
+  id: string;
+  userId?: string | null;
+  title: string;
+  message: string;
+  category: string;
+  isRead: boolean;
+  createdAt: string | Date;
+}

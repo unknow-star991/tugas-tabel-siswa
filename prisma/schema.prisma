@@ -19,6 +19,7 @@ model User {
   updatedAt    DateTime       @updatedAt
   auditLogs    AuditLog[]
   announcements Announcement[]
+  notifications Notification[]
 }
 
 model Department {
@@ -39,6 +40,7 @@ model ClassRoom {
   department   Department  @relation(fields: [departmentId], references: [id])
   academicYear String      @default("2026/2027")
   students     Student[]
+  schedules    Schedule[]
 }
 
 model Student {
@@ -163,4 +165,41 @@ model MbgMenu {
   distributionTime String   @default("11:45 - 12:30 WIB")
   status           String   @default("SCHEDULED") // "SCHEDULED" | "DISTRIBUTED"
   createdAt        DateTime @default(now())
+}
+
+model Schedule {
+  id           String     @id @default(uuid())
+  classRoomId  String
+  classRoom    ClassRoom  @relation(fields: [classRoomId], references: [id])
+  dayName      String     // "Senin", "Selasa", dll
+  period       Int        // Jam ke-1, Jam ke-2
+  startTime    String     // "07:15"
+  endTime      String     // "08:45"
+  subjectName  String     // "Pemrograman Web"
+  teacherName  String     // "Ibu Siti Rahmawati, S.Kom"
+  roomName     String     // "Lab Komputer RPL 1"
+}
+
+model Extracurricular {
+  id          String   @id @default(uuid())
+  name        String   // "Coding & Cyber Security Club"
+  category    String   // "Teknologi" | "Olahraga" | "Seni" | "Kepemimpinan"
+  coachName   String   // "Bpk. Suryanto, M.Pd"
+  scheduleDay String   // "Rabu"
+  scheduleTime String  // "15:30 - 17:00 WIB"
+  location    String   // "Lab RPL & Lapangan Utama"
+  memberCount Int      @default(25)
+  description String
+  createdAt   DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  category  String   // "MBG" | "ACADEMIC" | "LIBRARY" | "ANNOUNCEMENT"
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
 }
