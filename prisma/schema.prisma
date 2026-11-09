@@ -1,0 +1,129 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String         @id @default(uuid())
+  username     String         @unique
+  email        String         @unique
+  password     String
+  fullName     String
+  role         String         @default("USER") // "ADMIN" | "USER"
+  avatar       String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  auditLogs    AuditLog[]
+  announcements Announcement[]
+}
+
+model Department {
+  id          String      @id @default(uuid())
+  code        String      @unique // e.g. RPL, TKJ, MIPA
+  name        String      // e.g. Rekayasa Perangkat Lunak
+  description String?
+  classes     ClassRoom[]
+  students    Student[]
+}
+
+model ClassRoom {
+  id           String      @id @default(uuid())
+  gradeLevel   String      // "10", "11", "12"
+  name         String      // "X RPL 1", "XI MIPA 2"
+  departmentId String
+  department   Department  @relation(fields: [departmentId], references: [id])
+  academicYear String      @default("2026/2027")
+  students     Student[]
+}
+
+model Student {
+  id                String             @id @default(uuid())
+  nisn              String             @unique
+  nis               String?
+  fullName          String
+  gender            String             // "L" | "P"
+  birthDate         String?
+  birthPlace        String?
+  departmentId      String
+  department        Department         @relation(fields: [departmentId], references: [id])
+  classRoomId       String
+  classRoom         ClassRoom          @relation(fields: [classRoomId], references: [id])
+  status            String             @default("ACTIVE") // "ACTIVE" | "GRADUATED" | "LEAVE" | "TRANSFERRED"
+  parentName        String?
+  parentPhone       String?
+  address           String?
+  photoUrl          String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  attendances       Attendance[]
+  grades            Grade[]
+  achievements      Achievement[]
+  disciplineRecords DisciplineRecord[]
+}
+
+model Attendance {
+  id        String   @id @default(uuid())
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  date      String   // YYYY-MM-DD
+  status    String   // "PRESENT" | "SICK" | "PERMIT" | "ABSENT"
+  remarks   String?
+  createdAt DateTime @default(now())
+}
+
+model Grade {
+  id           String  @id @default(uuid())
+  studentId    String
+  student      Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  subjectName  String
+  semester     String  // "Ganjil" | "Genap"
+  academicYear String  // "2026/2027"
+  score        Float
+  gradeLetter  String  // "A", "B", "C", "D"
+}
+
+model Achievement {
+  id           String  @id @default(uuid())
+  studentId    String
+  student      Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  title        String
+  eventName    String
+  level        String  // "Sekolah" | "Kabupaten/Kota" | "Provinsi" | "Nasional" | "Internasional"
+  rank         String  // "Juara 1", "Juara 2", "Finalis"
+  dateAchieved String
+}
+
+model DisciplineRecord {
+  id          String  @id @default(uuid())
+  studentId   String
+  student     Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  type        String  // "PENALTY" | "MERIT"
+  points      Int
+  description String
+  date        String
+}
+
+model Announcement {
+  id         String   @id @default(uuid())
+  authorId   String?
+  author     User?    @relation(fields: [authorId], references: [id])
+  title      String
+  content    String
+  targetRole String   @default("ALL") // "ALL" | "ADMIN" | "USER"
+  isPinned   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String   // "CREATE_STUDENT", "UPDATE_STUDENT", "DELETE_STUDENT", "LOGIN", etc.
+  details   String
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
